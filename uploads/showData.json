@@ -1,0 +1,240 @@
+{
+  "series": [
+    {
+      "id": "045c4b60-d5f4-4c0a-ae88-ba0970e98682",
+      "title": "The Story of My Lifsgfe",
+      "description": "A personal documentary",
+      "thumbnail": "827f0a5c-b0b1-4a76-a188-fafc00d9c5a2.jpg",
+      "createdAt": "2025-12-23T02:55:02.006Z",
+      "episodeCount": 2,
+      "episodes": [
+        {
+          "title": "Episode 1",
+          "thumbnail": "bdf13da2-a902-4fad-81ff-687bdc2b7c48.jpg",
+          "media": [
+            {
+              "id": "16d36773-4442-4c82-9dd6-d382393b2183",
+              "filename": "f3a07318-0f16-4e84-8a79-3421e2ffabbc.jpg",
+              "originalName": "Photo Apr 11 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/f3a07318-0f16-4e84-8a79-3421e2ffabbc.jpg"
+            },
+            {
+              "id": "db3f65a9-86e5-4555-a732-bf87fd84b104",
+              "filename": "60702700-5b54-46a9-a6c3-ab37aa17420d.jpg",
+              "originalName": "Photo Apr 01 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/60702700-5b54-46a9-a6c3-ab37aa17420d.jpg"
+            },
+            {
+              "id": "32b2f380-a682-404e-af6d-3839dde6be76",
+              "filename": "76eb0580-1451-4a9e-bf14-c93cf57bd5df.jpg",
+              "originalName": "IMG-20250220-WA0007.jpg",
+              "type": "image",
+              "url": "/uploads/media/76eb0580-1451-4a9e-bf14-c93cf57bd5df.jpg"
+            },
+            {
+              "id": "0be84f80-e1f4-4d3f-b34a-85626bf20f2f",
+              "filename": "32e2131a-36d0-4354-b6d9-ac2cf56a5164.jpg",
+              "originalName": "Photo Dec 15 2024.jpg",
+              "type": "image",
+              "url": "/uploads/media/32e2131a-36d0-4354-b6d9-ac2cf56a5164.jpg"
+            },
+            {
+              "id": "a948316d-1eb1-463b-991f-0d02da697f29",
+              "filename": "4ea0df8f-b326-477b-aabc-7b5570a50d8a.jpg",
+              "originalName": "Photo Jun 02 2025 (1).jpg",
+              "type": "image",
+              "url": "/uploads/media/4ea0df8f-b326-477b-aabc-7b5570a50d8a.jpg"
+            },
+            {
+              "id": "efd8db41-4afe-48ee-84ff-47f65dced278",
+              "filename": "d80afb8a-7fde-4c02-9e3b-4c58425ee923.jpg",
+              "originalName": "Photo Feb 27 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/d80afb8a-7fde-4c02-9e3b-4c58425ee923.jpg"
+            }
+          ],
+          "music": "04f8f374-0553-4781-8bcb-5d267edcf516.mp3",
+          "musicOriginalName": "Hum Tum Kitne Paas Hai.mp3"
+        },
+        {
+          "title": "Episode 2",
+          "thumbnail": "723daecc-d94b-4851-a4ff-1cf0194789a4.jpg",
+          "media": [
+            {
+              "id": "746092ec-7083-408c-a526-cc6335fa0154",
+              "filename": "6b94638b-e793-4c55-a9c6-5cdc23f6c203.jpg",
+              "originalName": "Photo Aug 16 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/6b94638b-e793-4c55-a9c6-5cdc23f6c203.jpg"
+            },
+            {
+              "id": "ccf5b94e-15fb-413a-b1e8-5dd7dfc78df9",
+              "filename": "a6adb3e1-bf59-469f-a97f-74798328d834.jpg",
+              "originalName": "Photo Jan 26 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/a6adb3e1-bf59-469f-a97f-74798328d834.jpg"
+            },
+            {
+              "id": "d8bea3a2-6225-4eca-9844-64bc7791d8d2",
+              "filename": "92183e7b-0243-4e58-bf1f-9667297860eb.jpg",
+              "originalName": "Photo Aug 16 2025 (2).jpg",
+              "type": "image",
+              "url": "/uploads/media/92183e7b-0243-4e58-bf1f-9667297860eb.jpg"
+            },
+            {
+              "id": "e953396b-2abb-4499-bc83-1490a9b698fc",
+              "filename": "a890ba4f-6338-4fd4-90bd-e49c4ceeb2cd.jpg",
+              "originalName": "Photo Aug 16 2025 (1).jpg",
+              "type": "image",
+              "url": "/uploads/media/a890ba4f-6338-4fd4-90bd-e49c4ceeb2cd.jpg"
+            },
+            {
+              "id": "52613347-cea0-4ed4-a65a-9431daf28713",
+              "filename": "2ed15381-7d6e-4f64-a92b-f8c93e29727e.jpg",
+              "originalName": "IMG_20250816_113953~2.jpg",
+              "type": "image",
+              "url": "/uploads/media/2ed15381-7d6e-4f64-a92b-f8c93e29727e.jpg"
+            },
+            {
+              "id": "728fa9fa-78b9-455e-af91-10dfbb8d334c",
+              "filename": "1bb31b99-ffb3-4681-991b-cbe7ba2bfefe.jpg",
+              "originalName": "Photo Jul 24 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/1bb31b99-ffb3-4681-991b-cbe7ba2bfefe.jpg"
+            }
+          ],
+          "music": "714919cb-310f-4e23-ba92-bdb7c37b0993.mp3",
+          "musicOriginalName": "93a71a87-49d9-4d54-887a-375e1408bd58.mp3"
+        }
+      ]
+    },
+    {
+      "id": "2c6c611c-b4a9-44d8-9c0a-7e6d4ae67f7c",
+      "title": "The PEOPLE",
+      "description": "A personal journey through life's most precious memories... ",
+      "thumbnail": "7b57e453-ccaa-417b-8dcf-df74147aa736.jpg",
+      "createdAt": "2025-12-23T03:06:36.432Z",
+      "episodeCount": 2,
+      "episodes": [
+        {
+          "title": "Palak",
+          "thumbnail": "c3212b40-41a8-41ab-a717-9cccf08f3bbb.jpg",
+          "media": [
+            {
+              "id": "e1be25a5-0659-4a96-8044-9f154322edda",
+              "filename": "a4d1fbce-ac34-4374-9aba-67dc265af0b6.jpg",
+              "originalName": "Photo Apr 01 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/a4d1fbce-ac34-4374-9aba-67dc265af0b6.jpg"
+            },
+            {
+              "id": "0e24b491-db47-40dd-afcb-f205451125b0",
+              "filename": "f7322202-5f12-4198-9043-e53efb2d87a7.jpg",
+              "originalName": "Photo Apr 11 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/f7322202-5f12-4198-9043-e53efb2d87a7.jpg"
+            },
+            {
+              "id": "14c9882a-9615-4fb8-889f-f41fa161ffa0",
+              "filename": "13974055-fc6e-4029-9c01-c23a681a9c2e.jpg",
+              "originalName": "Photo Aug 14 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/13974055-fc6e-4029-9c01-c23a681a9c2e.jpg"
+            },
+            {
+              "id": "1e8deea1-2193-4749-b7b5-3891da2f064e",
+              "filename": "b0e0fe64-77ef-4c75-8771-60fe214e19da.jpg",
+              "originalName": "Photo Aug 16 2025 (1).jpg",
+              "type": "image",
+              "url": "/uploads/media/b0e0fe64-77ef-4c75-8771-60fe214e19da.jpg"
+            },
+            {
+              "id": "8f9b80b9-2ed9-444c-8607-8436a9664c7d",
+              "filename": "3c02cbc4-6f8a-4adc-b704-4fbbc9e4743f.jpg",
+              "originalName": "Photo Aug 16 2025 (2).jpg",
+              "type": "image",
+              "url": "/uploads/media/3c02cbc4-6f8a-4adc-b704-4fbbc9e4743f.jpg"
+            },
+            {
+              "id": "d23797f2-0d92-42c6-8d3d-daab9165ea14",
+              "filename": "7cc9fc90-fb24-4f44-987a-e0ff6457b231.jpg",
+              "originalName": "Photo Aug 16 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/7cc9fc90-fb24-4f44-987a-e0ff6457b231.jpg"
+            },
+            {
+              "id": "88691866-2b87-432b-83a8-0bf221512ccd",
+              "filename": "e984be15-6d31-477c-a109-97bf31fc8916.jpg",
+              "originalName": "Photo Dec 8 2025 (1).jpg",
+              "type": "image",
+              "url": "/uploads/media/e984be15-6d31-477c-a109-97bf31fc8916.jpg"
+            }
+          ],
+          "music": "1bde44ce-a0c2-4e58-b97a-3e41bf3ff6c1.mp3",
+          "musicOriginalName": "Hum Tum Kitne Paas Hai.mp3",
+          "description": "My favourite person. Someone who I always want to be happy and never loose ...."
+        },
+        {
+          "title": "Ved",
+          "thumbnail": "6902df64-8fbe-4a89-ae0f-dc32a7fa4d60.jpg",
+          "media": [
+            {
+              "id": "f380449e-0de8-4b1e-8775-52df4edd1c05",
+              "filename": "3c1850a2-3ada-4d19-84d0-9db2792823c5.jpg",
+              "originalName": "Photo Jul 5 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/3c1850a2-3ada-4d19-84d0-9db2792823c5.jpg"
+            },
+            {
+              "id": "341d6881-781a-4168-89c2-a1f72f7af466",
+              "filename": "60d7e049-988b-4dba-8e4d-9572406cf1b8.jpg",
+              "originalName": "Photo Jul 16 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/60d7e049-988b-4dba-8e4d-9572406cf1b8.jpg"
+            },
+            {
+              "id": "d50bbf99-5e9b-4d6e-ac07-be44836dc269",
+              "filename": "ae8e1800-caee-47e5-9f8b-1a6556827963.jpg",
+              "originalName": "Photo Jul 24 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/ae8e1800-caee-47e5-9f8b-1a6556827963.jpg"
+            },
+            {
+              "id": "a8141968-660b-4d3c-af5e-a43b11aead97",
+              "filename": "a2144c4a-f507-46b6-9b0c-d517d250aea2.jpg",
+              "originalName": "Photo Jul 28 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/a2144c4a-f507-46b6-9b0c-d517d250aea2.jpg"
+            },
+            {
+              "id": "1c29cd97-deae-4b95-9201-6b3966d94eb5",
+              "filename": "3ff7d481-ae93-4d30-bca6-591522b41f0c.jpg",
+              "originalName": "Photo Jun 02 2025 (1).jpg",
+              "type": "image",
+              "url": "/uploads/media/3ff7d481-ae93-4d30-bca6-591522b41f0c.jpg"
+            },
+            {
+              "id": "b11122a1-1a79-46e5-886b-a17307fe8c10",
+              "filename": "f0cab544-aa3b-4b51-9601-4c05e9588bfc.jpg",
+              "originalName": "Photo Jun 02 2025 (2).jpg",
+              "type": "image",
+              "url": "/uploads/media/f0cab544-aa3b-4b51-9601-4c05e9588bfc.jpg"
+            },
+            {
+              "id": "f3c459c1-77a6-48d0-841f-005d49661697",
+              "filename": "1135d9da-a443-4545-8b75-91cf177e8849.jpg",
+              "originalName": "Photo Jun 02 2025.jpg",
+              "type": "image",
+              "url": "/uploads/media/1135d9da-a443-4545-8b75-91cf177e8849.jpg"
+            }
+          ],
+          "music": "3207369e-cb73-47f6-bcd6-17ab07ce6b61.mp3",
+          "musicOriginalName": "Hum Tum Kitne Paas Hai.mp3",
+          "description": "The one who taught me friendship and made me feel special for the first time..."
+        }
+      ]
+    }
+  ]
+}
