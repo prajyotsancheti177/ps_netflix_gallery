@@ -6,7 +6,7 @@
       "description": "A personal documentary",
       "thumbnail": "827f0a5c-b0b1-4a76-a188-fafc00d9c5a2.jpg",
       "createdAt": "2025-12-23T02:55:02.006Z",
-      "episodeCount": 2,
+      "episodeCount": 4,
       "episodes": [
         {
           "title": "Episode 1",
@@ -107,6 +107,146 @@
           ],
           "music": "714919cb-310f-4e23-ba92-bdb7c37b0993.mp3",
           "musicOriginalName": "93a71a87-49d9-4d54-887a-375e1408bd58.mp3"
+        },
+        {
+          "title": "Episode 3",
+          "thumbnail": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/thumbnails/85553f5f-b717-4dca-9323-d0b49cfffa27.jpg",
+          "media": [
+            {
+              "id": "0e470c37-3f7a-4447-8be7-06249fd305ff",
+              "filename": "media/2f21eeac-53e5-4555-8d21-8f2beab3a35d.jpg",
+              "originalName": "Photo Aug 14 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/2f21eeac-53e5-4555-8d21-8f2beab3a35d.jpg"
+            },
+            {
+              "id": "6ccbb9e7-2d8a-42e1-a4f0-52f104739e4c",
+              "filename": "media/9fd0a8a9-0bad-4235-a72a-21e80ebc6117.jpg",
+              "originalName": "Photo Dec 8 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/9fd0a8a9-0bad-4235-a72a-21e80ebc6117.jpg"
+            },
+            {
+              "id": "757e15a3-269d-4430-9d2b-29840d665ad4",
+              "filename": "media/9c207b81-1a5c-4888-88fe-9c691120b8d5.jpg",
+              "originalName": "Photo Jul 5 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/9c207b81-1a5c-4888-88fe-9c691120b8d5.jpg"
+            }
+          ]
+        },
+        {
+          "title": "Episode 4",
+          "thumbnail": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/thumbnails/41b8aa84-8e44-4b51-a8d2-67c2bd3e8955.jpg",
+          "media": [
+            {
+              "id": "a7d3d54b-e36f-4d43-aed5-e9b2bc439f8e",
+              "filename": "media/6bffea8d-01c2-46b3-8fd8-d99abf0d8673.jpg",
+              "originalName": "Photo Apr 11 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/6bffea8d-01c2-46b3-8fd8-d99abf0d8673.jpg"
+            },
+            {
+              "id": "efc54ec9-204d-427a-a59c-d564f63f6fb9",
+              "filename": "media/607cf0ef-8eae-46a2-a7c3-8a97a8b3421a.jpg",
+              "originalName": "Photo Aug 14 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/607cf0ef-8eae-46a2-a7c3-8a97a8b3421a.jpg"
+            },
+            {
+              "id": "bc742332-9d64-4b3f-8ac9-265bea558658",
+              "filename": "media/7024c892-b9cb-40d8-b647-e76033fa830d.jpg",
+              "originalName": "Photo Aug 16 2025 (1).jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/7024c892-b9cb-40d8-b647-e76033fa830d.jpg"
+            },
+            {
+              "id": "22598720-49df-4843-a068-8f9d4f2f0a57",
+              "filename": "media/6a381a63-7dc9-4ae8-bbea-475fbb72430e.jpg",
+              "originalName": "Photo Aug 16 2025 (2).jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/6a381a63-7dc9-4ae8-bbea-475fbb72430e.jpg"
+            },
+            {
+              "id": "2b93472a-0390-428a-8696-3ecedfc7515c",
+              "filename": "media/085973fa-8c4b-495c-a132-a294c4bca93d.jpg",
+              "originalName": "Photo Aug 16 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/085973fa-8c4b-495c-a132-a294c4bca93d.jpg"
+            },
+            {
+              "id": "44777267-dd0c-4a8f-b350-6e25e6fd5424",
+              "filename": "media/16823919-0a6a-44a2-91c1-bcd2dd5b49d8.jpg",
+              "originalName": "Photo Dec 8 2025 (1).jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/16823919-0a6a-44a2-91c1-bcd2dd5b49d8.jpg"
+            },
+            {
+              "id": "2ff9c70f-3196-460c-a756-934029e4d838",
+              "filename": "media/514d8eb9-c604-4522-accb-6c7820850e40.jpg",
+              "originalName": "Photo Dec 8 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/514d8eb9-c604-4522-accb-6c7820850e40.jpg"
+            },
+            {
+              "id": "4c3b945a-7463-459f-b0f8-c93804663744",
+              "filename": "media/35244c4b-4700-4f69-afb1-d8c67c0ffb15.jpg",
+              "originalName": "Photo Dec 15 2024.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/35244c4b-4700-4f69-afb1-d8c67c0ffb15.jpg"
+            },
+            {
+              "id": "427e347f-0d73-4071-9173-055a9f11f53c",
+              "filename": "media/c9c75332-a31c-417a-85bf-b17c2816d212.jpg",
+              "originalName": "Photo Feb 27 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/c9c75332-a31c-417a-85bf-b17c2816d212.jpg"
+            },
+            {
+              "id": "10f96562-8c3f-4e09-957c-bd8df1a76a93",
+              "filename": "media/00569777-58a3-46f9-9796-a1cbec8ac43a.jpg",
+              "originalName": "Photo Jan 26 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/00569777-58a3-46f9-9796-a1cbec8ac43a.jpg"
+            },
+            {
+              "id": "f245cabb-a645-4e28-8c16-08288bc09145",
+              "filename": "media/242360be-4acf-4140-8d06-7f1cd5aa8e17.jpg",
+              "originalName": "Photo Jul 5 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/242360be-4acf-4140-8d06-7f1cd5aa8e17.jpg"
+            },
+            {
+              "id": "e06d2f90-9c13-415f-89d5-1089e0f6ef6b",
+              "filename": "media/43c261de-3e74-481f-8d37-d5d342f824c3.jpg",
+              "originalName": "Photo Jul 16 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/43c261de-3e74-481f-8d37-d5d342f824c3.jpg"
+            },
+            {
+              "id": "b8b84282-d6bd-495d-a104-662420a9648d",
+              "filename": "media/b07f3655-5af2-45f4-8912-78d6445dae7f.jpg",
+              "originalName": "Photo Jul 24 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/b07f3655-5af2-45f4-8912-78d6445dae7f.jpg"
+            },
+            {
+              "id": "081eeea6-c77c-4874-93d5-191b688417e7",
+              "filename": "media/81c41480-8c01-424c-b2b6-598b36c8a349.jpg",
+              "originalName": "Photo Jul 28 2025.jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/81c41480-8c01-424c-b2b6-598b36c8a349.jpg"
+            },
+            {
+              "id": "e1e2e1c0-df80-45f3-ba86-9b4db726ad0d",
+              "filename": "media/d545c0c4-53aa-4833-97bc-a7e7f3832184.jpg",
+              "originalName": "Photo Jun 02 2025 (1).jpg",
+              "type": "image",
+              "url": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/media/d545c0c4-53aa-4833-97bc-a7e7f3832184.jpg"
+            }
+          ],
+          "music": "https://the-ps-aws-bucket.s3.ap-south-1.amazonaws.com/music/7fe18b78-5f6b-4416-8e10-23a076c5c4b9.mp3",
+          "musicOriginalName": "Hum Tum Kitne Paas Hai.mp3"
         }
       ]
     },

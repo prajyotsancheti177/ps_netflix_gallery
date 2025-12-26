@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -6,31 +7,39 @@ const apiRoutes = require('./routes/api');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Serve uploaded files
+// Serve uploaded files (for legacy local files only)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // API routes
 app.use('/api', apiRoutes);
 
-// Create upload directories if they don't exist
-const uploadDirs = [
-    path.join(__dirname, 'uploads'),
-    path.join(__dirname, 'uploads', 'thumbnails'),
-    path.join(__dirname, 'uploads', 'media'),
-    path.join(__dirname, 'uploads', 'music')
-];
+// In production, serve the React build
+if (isProduction) {
+    const clientBuildPath = path.join(__dirname, '..', 'client', 'dist');
+    
+    // Serve static files from the React build
+    app.use(express.static(clientBuildPath));
+    
+    // Handle React routing - serve index.html for all non-API routes
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(clientBuildPath, 'index.html'));
+    });
+    
+    console.log('🚀 Running in PRODUCTION mode - serving static files from client/dist');
+}
 
-uploadDirs.forEach(dir => {
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-        console.log(`Created directory: ${dir}`);
-    }
-});
+// Create uploads directory for showData.json only
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    console.log(`Created directory: ${uploadsDir}`);
+}
 
 // Initialize show data file if it doesn't exist
 const showDataPath = path.join(__dirname, 'uploads', 'showData.json');

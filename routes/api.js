@@ -1,6 +1,6 @@
 /**
  * Netflix Life Story - API Routes
- * Handles file uploads and show data management with multi-series support
+ * Handles file uploads to AWS S3 and show data management with multi-series support
  */
 
 const express = require('express');
@@ -8,6 +8,15 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+const {
+    seriesThumbnailStorage,
+    thumbnailStorage,
+    mediaStorage,
+    musicStorage,
+    getS3Url,
+    deleteFromS3,
+    getKeyFromUrl
+} = require('../config/s3');
 
 const router = express.Router();
 
@@ -15,70 +24,7 @@ const router = express.Router();
 const UPLOADS_DIR = path.join(__dirname, '..', 'uploads');
 const SHOW_DATA_PATH = path.join(UPLOADS_DIR, 'showData.json');
 
-// Configure multer for series thumbnail uploads
-const seriesThumbnailStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const destDir = path.join(UPLOADS_DIR, 'series-thumbnails');
-        if (!fs.existsSync(destDir)) {
-            fs.mkdirSync(destDir, { recursive: true });
-        }
-        cb(null, destDir);
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const filename = `${uuidv4()}${ext}`;
-        cb(null, filename);
-    }
-});
-
-// Configure multer for episode thumbnail uploads
-const thumbnailStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const destDir = path.join(UPLOADS_DIR, 'thumbnails');
-        if (!fs.existsSync(destDir)) {
-            fs.mkdirSync(destDir, { recursive: true });
-        }
-        cb(null, destDir);
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const filename = `${uuidv4()}${ext}`;
-        cb(null, filename);
-    }
-});
-
-// Configure multer for media uploads
-const mediaStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const destDir = path.join(UPLOADS_DIR, 'media');
-        if (!fs.existsSync(destDir)) {
-            fs.mkdirSync(destDir, { recursive: true });
-        }
-        cb(null, destDir);
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const filename = `${uuidv4()}${ext}`;
-        cb(null, filename);
-    }
-});
-
-// Configure multer for music uploads
-const musicStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const destDir = path.join(UPLOADS_DIR, 'music');
-        if (!fs.existsSync(destDir)) {
-            fs.mkdirSync(destDir, { recursive: true });
-        }
-        cb(null, destDir);
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const filename = `${uuidv4()}${ext}`;
-        cb(null, filename);
-    }
-});
-
+// Configure multer with S3 storage
 const uploadSeriesThumbnail = multer({
     storage: seriesThumbnailStorage,
     limits: { fileSize: 50 * 1024 * 1024 },
@@ -255,7 +201,7 @@ router.put('/series/:seriesId', (req, res) => {
 });
 
 // DELETE /api/series/:seriesId - Delete series
-router.delete('/series/:seriesId', (req, res) => {
+router.delete('/series/:seriesId', async (req, res) => {
     try {
         const data = getData();
         const seriesIndex = data.series.findIndex(s => s.id === req.params.seriesId);
@@ -264,7 +210,29 @@ router.delete('/series/:seriesId', (req, res) => {
             return res.status(404).json({ error: 'Series not found' });
         }
         
-        // TODO: Optionally delete associated files
+        const series = data.series[seriesIndex];
+        
+        // Delete associated S3 files
+        if (series.thumbnail) {
+            const key = getKeyFromUrl(series.thumbnail);
+            if (key) await deleteFromS3(key);
+        }
+        
+        for (const episode of series.episodes) {
+            if (episode.thumbnail) {
+                const key = getKeyFromUrl(episode.thumbnail);
+                if (key) await deleteFromS3(key);
+            }
+            if (episode.music) {
+                const key = getKeyFromUrl(episode.music);
+                if (key) await deleteFromS3(key);
+            }
+            for (const media of episode.media || []) {
+                const key = getKeyFromUrl(media.url);
+                if (key) await deleteFromS3(key);
+            }
+        }
+        
         data.series.splice(seriesIndex, 1);
         saveData(data);
         
@@ -276,7 +244,7 @@ router.delete('/series/:seriesId', (req, res) => {
 });
 
 // POST /api/series/:seriesId/upload/thumbnail - Upload series thumbnail
-router.post('/series/:seriesId/upload/thumbnail', uploadSeriesThumbnail.single('thumbnail'), (req, res) => {
+router.post('/series/:seriesId/upload/thumbnail', uploadSeriesThumbnail.single('thumbnail'), async (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' });
     }
@@ -288,21 +256,24 @@ router.post('/series/:seriesId/upload/thumbnail', uploadSeriesThumbnail.single('
         return res.status(404).json({ error: 'Series not found' });
     }
     
-    // Delete old thumbnail if exists
+    // Delete old thumbnail from S3 if exists
     if (series.thumbnail) {
-        const oldPath = path.join(UPLOADS_DIR, 'series-thumbnails', series.thumbnail);
-        if (fs.existsSync(oldPath)) {
-            fs.unlinkSync(oldPath);
-        }
+        const oldKey = getKeyFromUrl(series.thumbnail);
+        if (oldKey) await deleteFromS3(oldKey);
     }
     
-    series.thumbnail = req.file.filename;
+    // Store full S3 URL
+    const s3Url = getS3Url(req.file.key);
+    series.thumbnail = s3Url;
     saveData(data);
+    
+    console.log(`[API] ✅ Series thumbnail uploaded successfully`);
+    console.log(`[API]    S3 URL: ${s3Url}`);
     
     res.json({
         success: true,
-        filename: req.file.filename,
-        url: `/uploads/series-thumbnails/${req.file.filename}`
+        filename: req.file.key,
+        url: s3Url
     });
 });
 
@@ -311,7 +282,7 @@ router.post('/series/:seriesId/upload/thumbnail', uploadSeriesThumbnail.single('
 // ============================================
 
 // POST /api/series/:seriesId/upload/thumbnail/:episodeIndex - Upload episode thumbnail
-router.post('/series/:seriesId/upload/thumbnail/:episodeIndex', uploadThumbnail.single('thumbnail'), (req, res) => {
+router.post('/series/:seriesId/upload/thumbnail/:episodeIndex', uploadThumbnail.single('thumbnail'), async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     
     if (!req.file) {
@@ -329,21 +300,24 @@ router.post('/series/:seriesId/upload/thumbnail/:episodeIndex', uploadThumbnail.
         return res.status(400).json({ error: 'Invalid episode index' });
     }
     
-    // Delete old thumbnail if exists
+    // Delete old thumbnail from S3 if exists
     if (series.episodes[episodeIndex].thumbnail) {
-        const oldPath = path.join(UPLOADS_DIR, 'thumbnails', series.episodes[episodeIndex].thumbnail);
-        if (fs.existsSync(oldPath)) {
-            fs.unlinkSync(oldPath);
-        }
+        const oldKey = getKeyFromUrl(series.episodes[episodeIndex].thumbnail);
+        if (oldKey) await deleteFromS3(oldKey);
     }
     
-    series.episodes[episodeIndex].thumbnail = req.file.filename;
+    // Store full S3 URL
+    const s3Url = getS3Url(req.file.key);
+    series.episodes[episodeIndex].thumbnail = s3Url;
     saveData(data);
+    
+    console.log(`[API] ✅ Episode ${episodeIndex} thumbnail uploaded successfully`);
+    console.log(`[API]    S3 URL: ${s3Url}`);
     
     res.json({
         success: true,
-        filename: req.file.filename,
-        url: `/uploads/thumbnails/${req.file.filename}`
+        filename: req.file.key,
+        url: s3Url
     });
 });
 
@@ -368,17 +342,21 @@ router.post('/series/:seriesId/upload/media/:episodeIndex', uploadMedia.array('m
     
     const newMedia = req.files.map(file => {
         const isVideo = /mp4|webm|mov|avi|mkv/.test(path.extname(file.originalname).toLowerCase());
+        const s3Url = getS3Url(file.key);
         return {
             id: uuidv4(),
-            filename: file.filename,
+            filename: file.key,
             originalName: file.originalname,
             type: isVideo ? 'video' : 'image',
-            url: `/uploads/media/${file.filename}`
+            url: s3Url
         };
     });
     
     series.episodes[episodeIndex].media.push(...newMedia);
     saveData(data);
+    
+    console.log(`[API] ✅ ${newMedia.length} media file(s) uploaded to Episode ${episodeIndex}`);
+    newMedia.forEach(m => console.log(`[API]    - ${m.type}: ${m.url}`));
     
     res.json({
         success: true,
@@ -387,7 +365,7 @@ router.post('/series/:seriesId/upload/media/:episodeIndex', uploadMedia.array('m
 });
 
 // POST /api/series/:seriesId/upload/music/:episodeIndex - Upload episode background music
-router.post('/series/:seriesId/upload/music/:episodeIndex', uploadMusic.single('music'), (req, res) => {
+router.post('/series/:seriesId/upload/music/:episodeIndex', uploadMusic.single('music'), async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     
     if (!req.file) {
@@ -405,28 +383,32 @@ router.post('/series/:seriesId/upload/music/:episodeIndex', uploadMusic.single('
         return res.status(400).json({ error: 'Invalid episode index' });
     }
     
-    // Delete old music if exists
+    // Delete old music from S3 if exists
     if (series.episodes[episodeIndex].music) {
-        const oldPath = path.join(UPLOADS_DIR, 'music', series.episodes[episodeIndex].music);
-        if (fs.existsSync(oldPath)) {
-            fs.unlinkSync(oldPath);
-        }
+        const oldKey = getKeyFromUrl(series.episodes[episodeIndex].music);
+        if (oldKey) await deleteFromS3(oldKey);
     }
     
-    series.episodes[episodeIndex].music = req.file.filename;
+    // Store full S3 URL
+    const s3Url = getS3Url(req.file.key);
+    series.episodes[episodeIndex].music = s3Url;
     series.episodes[episodeIndex].musicOriginalName = req.file.originalname;
     saveData(data);
     
+    console.log(`[API] ✅ Music uploaded to Episode ${episodeIndex}`);
+    console.log(`[API]    Original: ${req.file.originalname}`);
+    console.log(`[API]    S3 URL: ${s3Url}`);
+    
     res.json({
         success: true,
-        filename: req.file.filename,
+        filename: req.file.key,
         originalName: req.file.originalname,
-        url: `/uploads/music/${req.file.filename}`
+        url: s3Url
     });
 });
 
 // DELETE /api/series/:seriesId/music/:episodeIndex - Delete episode music
-router.delete('/series/:seriesId/music/:episodeIndex', (req, res) => {
+router.delete('/series/:seriesId/music/:episodeIndex', async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     
     const data = getData();
@@ -443,10 +425,8 @@ router.delete('/series/:seriesId/music/:episodeIndex', (req, res) => {
     const episode = series.episodes[episodeIndex];
     
     if (episode.music) {
-        const filePath = path.join(UPLOADS_DIR, 'music', episode.music);
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-        }
+        const key = getKeyFromUrl(episode.music);
+        if (key) await deleteFromS3(key);
         episode.music = null;
         episode.musicOriginalName = null;
         saveData(data);
@@ -456,7 +436,7 @@ router.delete('/series/:seriesId/music/:episodeIndex', (req, res) => {
 });
 
 // DELETE /api/series/:seriesId/media/:episodeIndex/:mediaId - Delete a media file
-router.delete('/series/:seriesId/media/:episodeIndex/:mediaId', (req, res) => {
+router.delete('/series/:seriesId/media/:episodeIndex/:mediaId', async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     const mediaId = req.params.mediaId;
     
@@ -478,12 +458,10 @@ router.delete('/series/:seriesId/media/:episodeIndex/:mediaId', (req, res) => {
         return res.status(404).json({ error: 'Media not found' });
     }
     
-    // Delete file from disk
+    // Delete file from S3
     const mediaFile = episode.media[mediaIndex];
-    const filePath = path.join(UPLOADS_DIR, 'media', mediaFile.filename);
-    if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-    }
+    const key = getKeyFromUrl(mediaFile.url);
+    if (key) await deleteFromS3(key);
     
     // Remove from data
     episode.media.splice(mediaIndex, 1);
@@ -613,8 +591,8 @@ router.post('/show', (req, res) => {
     }
 });
 
-// Legacy upload routes remain for compatibility
-router.post('/upload/thumbnail/:episodeIndex', uploadThumbnail.single('thumbnail'), (req, res) => {
+// Legacy upload routes - now use S3
+router.post('/upload/thumbnail/:episodeIndex', uploadThumbnail.single('thumbnail'), async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     
     if (!req.file) {
@@ -631,20 +609,20 @@ router.post('/upload/thumbnail/:episodeIndex', uploadThumbnail.single('thumbnail
         return res.status(400).json({ error: 'Invalid episode index' });
     }
     
+    // Delete old thumbnail from S3 if it's an S3 URL
     if (series.episodes[episodeIndex].thumbnail) {
-        const oldPath = path.join(UPLOADS_DIR, 'thumbnails', series.episodes[episodeIndex].thumbnail);
-        if (fs.existsSync(oldPath)) {
-            fs.unlinkSync(oldPath);
-        }
+        const oldKey = getKeyFromUrl(series.episodes[episodeIndex].thumbnail);
+        if (oldKey) await deleteFromS3(oldKey);
     }
     
-    series.episodes[episodeIndex].thumbnail = req.file.filename;
+    const s3Url = getS3Url(req.file.key);
+    series.episodes[episodeIndex].thumbnail = s3Url;
     saveData(data);
     
     res.json({
         success: true,
-        filename: req.file.filename,
-        url: `/uploads/thumbnails/${req.file.filename}`
+        filename: req.file.key,
+        url: s3Url
     });
 });
 
@@ -667,12 +645,13 @@ router.post('/upload/media/:episodeIndex', uploadMedia.array('media', 50), (req,
     
     const newMedia = req.files.map(file => {
         const isVideo = /mp4|webm|mov|avi|mkv/.test(path.extname(file.originalname).toLowerCase());
+        const s3Url = getS3Url(file.key);
         return {
             id: uuidv4(),
-            filename: file.filename,
+            filename: file.key,
             originalName: file.originalname,
             type: isVideo ? 'video' : 'image',
-            url: `/uploads/media/${file.filename}`
+            url: s3Url
         };
     });
     
@@ -682,7 +661,7 @@ router.post('/upload/media/:episodeIndex', uploadMedia.array('media', 50), (req,
     res.json({ success: true, files: newMedia });
 });
 
-router.post('/upload/music/:episodeIndex', uploadMusic.single('music'), (req, res) => {
+router.post('/upload/music/:episodeIndex', uploadMusic.single('music'), async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     
     if (!req.file) {
@@ -699,26 +678,26 @@ router.post('/upload/music/:episodeIndex', uploadMusic.single('music'), (req, re
         return res.status(400).json({ error: 'Invalid episode index' });
     }
     
+    // Delete old music from S3 if it's an S3 URL
     if (series.episodes[episodeIndex].music) {
-        const oldPath = path.join(UPLOADS_DIR, 'music', series.episodes[episodeIndex].music);
-        if (fs.existsSync(oldPath)) {
-            fs.unlinkSync(oldPath);
-        }
+        const oldKey = getKeyFromUrl(series.episodes[episodeIndex].music);
+        if (oldKey) await deleteFromS3(oldKey);
     }
     
-    series.episodes[episodeIndex].music = req.file.filename;
+    const s3Url = getS3Url(req.file.key);
+    series.episodes[episodeIndex].music = s3Url;
     series.episodes[episodeIndex].musicOriginalName = req.file.originalname;
     saveData(data);
     
     res.json({
         success: true,
-        filename: req.file.filename,
+        filename: req.file.key,
         originalName: req.file.originalname,
-        url: `/uploads/music/${req.file.filename}`
+        url: s3Url
     });
 });
 
-router.delete('/music/:episodeIndex', (req, res) => {
+router.delete('/music/:episodeIndex', async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     
     const data = getData();
@@ -734,10 +713,8 @@ router.delete('/music/:episodeIndex', (req, res) => {
     const episode = series.episodes[episodeIndex];
     
     if (episode.music) {
-        const filePath = path.join(UPLOADS_DIR, 'music', episode.music);
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-        }
+        const key = getKeyFromUrl(episode.music);
+        if (key) await deleteFromS3(key);
         episode.music = null;
         episode.musicOriginalName = null;
         saveData(data);
@@ -746,7 +723,7 @@ router.delete('/music/:episodeIndex', (req, res) => {
     res.json({ success: true });
 });
 
-router.delete('/media/:episodeIndex/:mediaId', (req, res) => {
+router.delete('/media/:episodeIndex/:mediaId', async (req, res) => {
     const episodeIndex = parseInt(req.params.episodeIndex);
     const mediaId = req.params.mediaId;
     
@@ -768,10 +745,8 @@ router.delete('/media/:episodeIndex/:mediaId', (req, res) => {
     }
     
     const mediaFile = episode.media[mediaIndex];
-    const filePath = path.join(UPLOADS_DIR, 'media', mediaFile.filename);
-    if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-    }
+    const key = getKeyFromUrl(mediaFile.url);
+    if (key) await deleteFromS3(key);
     
     episode.media.splice(mediaIndex, 1);
     saveData(data);
